@@ -157,6 +157,9 @@ MonoBehaviour:
     type: 3}
   _fireRate: 0.15
   _lives: 3
+  _isTripleShotActive: 0
+  _tripleShotPrefab: {fileID: 8961764496537443186, guid: 06dd39dbb2adfae4d8ba3dfd3cf47272,
+    type: 3}
 --- !u!212 &124489911
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -215,7 +218,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 124489909}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.009, y: -0.675, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 0}
@@ -360,6 +363,8 @@ MonoBehaviour:
   _enemyPrefab: {fileID: 7369414319269560765, guid: 0cf1342126b86b94eb642b1b4573647d,
     type: 3}
   _enemyContainer: {fileID: 1660694389}
+  _tripleShotPrefab: {fileID: 8624878831094647618, guid: 495a175308aba8c4a804b4c3e287497f,
+    type: 3}
 --- !u!4 &1301075683
 Transform:
   m_ObjectHideFlags: 0
@@ -574,7 +579,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2121489583}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -10}
+  m_LocalPosition: {x: 0, y: 1.04, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

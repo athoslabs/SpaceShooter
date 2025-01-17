@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public class PowerUp : MonoBehaviour
 {
     [SerializeField]
-    private float _speed = 4.0f;
+    private float _speed = 3.0f;
 
     // Update is called once per frame
     void Update()
@@ -14,28 +14,21 @@ public class Enemy : MonoBehaviour
 
         if(transform.position.y < -5.0f)
         {
-            float randomX = Random.Range(-8.0f, 8.0f);
-            transform.position = new Vector3(randomX, 7.4f, 0);
+            Destroy(this.gameObject);
+
         }
-        
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         if(other.tag == "Player")
         {
-            Player player = other.transform.GetComponent<Player>();
+            Player player = other.gameObject.GetComponent<Player>();
             if(player != null)
             {
-                player.Damage();
+                player.TripleShotActive();
             }
-           
-            Destroy(this.gameObject);
-        }
 
-        if(other.tag == "Laser")
-        {
-            Destroy(other.gameObject);
             Destroy(this.gameObject);
         }
     }
