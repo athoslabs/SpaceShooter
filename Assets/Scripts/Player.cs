@@ -6,6 +6,7 @@ public class Player : MonoBehaviour
 {
     [SerializeField]
     private float _speed = 3.5f;
+    private float _speedMultiplier = 2.0f;
 
     [SerializeField]
     private GameObject _laserPrefab;
@@ -19,11 +20,14 @@ public class Player : MonoBehaviour
 
     private SpawnManager _spawnManager;
 
-    [SerializeField]
     private bool _isTripleShotActive = false;
+    private bool _isShieldsActive = false;
 
     [SerializeField]
     private GameObject _tripleShotPrefab;
+
+    [SerializeField]
+    private GameObject _shieldVisualizer;
 
     // Start is called before the first frame update
     void Start()
@@ -41,14 +45,12 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         CalculateMovement();
 
         if(Input.GetKeyDown(KeyCode.Space) && Time.time > _canFire)
         {
             FireLaser();
         }
-       
     }
 
     void CalculateMovement()
@@ -83,12 +85,17 @@ public class Player : MonoBehaviour
         {
             Instantiate(_laserPrefab, transform.position + new Vector3(0, 1.05f, 0), Quaternion.identity);
         }
-        
-        
     }
 
     public void Damage()
     {
+        if(_isShieldsActive == true)
+        {
+            _isShieldsActive = false;
+            _shieldVisualizer.gameObject.SetActive(false);
+            return;
+        }
+
         _lives--;
 
         if(_lives < 1)
@@ -103,14 +110,30 @@ public class Player : MonoBehaviour
     {
         _isTripleShotActive = true;
         StartCoroutine(TripleShotPowerDownRountine());
-       
-
     }
 
     IEnumerator TripleShotPowerDownRountine()
     {
         yield return new WaitForSeconds(5.0f);
         _isTripleShotActive = false;
+    }
+
+    public void SpeedBoostActive()
+    {
+        _speed *= _speedMultiplier;
+        StartCoroutine(SpeedBoostPowerDownRoutine());
+    }
+
+    IEnumerator SpeedBoostPowerDownRoutine()
+    {
+        yield return new WaitForSeconds(5.0f);
+        _speed /= _speedMultiplier;
+    }
+
+    public void ShieldsActive()
+    {
+        _isShieldsActive = true;
+        _shieldVisualizer.gameObject.SetActive(true);
     }
 
 }
