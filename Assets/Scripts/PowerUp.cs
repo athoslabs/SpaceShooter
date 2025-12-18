@@ -40,7 +40,7 @@ public class PowerUp : MonoBehaviour
                         _player.SpeedBoostActive();
                         break;
                     case 2:
-                        Debug.Log("Sheild Power Up");
+                        _player.ShieldActive();
                         break;
                     default:
                         Debug.Log("Default Value");
