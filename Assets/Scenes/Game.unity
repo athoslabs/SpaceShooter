@@ -252,7 +252,6 @@ MonoBehaviour:
   _laserOffset: 0.8
   _fireRate: 0.15
   _lives: 3
-  _isTripleShotActive: 0
 --- !u!212 &1422492679
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -327,7 +326,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.025933504, y: 0.0000009536743}
@@ -459,8 +458,10 @@ MonoBehaviour:
     type: 3}
   _enemyContainer: {fileID: 1725809820}
   _randomPowerUpTime: 0
-  _tripleShotPowerUpPrefab: {fileID: 4970345944473497067, guid: b1f9290f1ab60b144bc8e0b9b9d7cd13,
-    type: 3}
+  _powerUps:
+  - {fileID: 4970345944473497067, guid: b1f9290f1ab60b144bc8e0b9b9d7cd13, type: 3}
+  - {fileID: 6130326804231868785, guid: ef3003cef4cf96e4c8da70e0fcf4231a, type: 3}
+  - {fileID: 0}
 --- !u!4 &1656397289
 Transform:
   m_ObjectHideFlags: 0
