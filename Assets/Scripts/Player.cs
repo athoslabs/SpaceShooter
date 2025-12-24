@@ -30,7 +30,7 @@ public class Player : MonoBehaviour
     private GameObject _shieldVisualizer;
 
     [SerializeField]
-    private GameObject _leftEngineDamage, _rightEngineDamage;
+    private GameObject _leftEngineDamage, _rightEngineDamage, _turnOffThruster;
 
     [SerializeField]
     private int _score;
@@ -38,6 +38,9 @@ public class Player : MonoBehaviour
     [SerializeField]
     private AudioClip _laserSound;
     private AudioSource _audioSource;
+    [SerializeField]
+    private GameObject _explosionPrefab;
+
 
     // Start is called before the first frame update
     void Start()
@@ -70,6 +73,7 @@ public class Player : MonoBehaviour
 
         _leftEngineDamage.SetActive(false);
         _rightEngineDamage.SetActive(false);
+        _turnOffThruster.SetActive(true);
     }
 
     // Update is called once per frame
@@ -107,6 +111,8 @@ public class Player : MonoBehaviour
 
     void FireLaser()
     {
+        _audioSource.clip = _laserSound;
+
         _canFire = Time.time + _fireRate;
 
         if(_isTripleShotActive == true)
@@ -135,10 +141,12 @@ public class Player : MonoBehaviour
         if(_lives == 2)
         {
             _leftEngineDamage.SetActive(true);
+          
         }
         else if(_lives == 1)
         {
             _rightEngineDamage.SetActive(true);
+           
         }
 
         _uiManager.UpdateLives(_lives);
@@ -146,9 +154,17 @@ public class Player : MonoBehaviour
         if(_lives <= 0)
         {
             _spawnManager.OnPlayerDeath();
-            Destroy(this.gameObject);
+            Instantiate(_explosionPrefab, transform.position, Quaternion.identity);
+            _leftEngineDamage.SetActive(false);
+            _rightEngineDamage.SetActive(false);
+            _turnOffThruster.SetActive(false);
+            Destroy(GetComponent<SpriteRenderer>());
+            Destroy(GetComponent<Collider2D>());
+            Destroy(this.gameObject, 2.8f);
         }
     }
+
+    // Handle PowerUp Methods
 
     public void TripleShotActive()
     {
@@ -158,7 +174,7 @@ public class Player : MonoBehaviour
 
     IEnumerator TripleShotPowerDownRoutine()
     {
-        yield return new WaitForSeconds(5.0f);
+        yield return new WaitForSeconds(1.8f);
 
         _isTripleShotActive = false;
 
