@@ -41,6 +41,10 @@ public class Player : MonoBehaviour
     [SerializeField]
     private GameObject _explosionPrefab;
 
+    [SerializeField]
+    private bool _thrusterBoost = false;
+    [SerializeField]
+    private float _thrusterBoostMultiplier = 2.5f;
 
     // Start is called before the first frame update
     void Start()
@@ -97,10 +101,22 @@ public class Player : MonoBehaviour
     {
         _horizontalInput = Input.GetAxis("Horizontal");
         _verticalInput = Input.GetAxis("Vertical");
+        _thrusterBoost = Input.GetKey(KeyCode.LeftShift);
         _direction.x = _horizontalInput;
         _direction.y = _verticalInput;
 
-        transform.Translate(_direction * (_speed * Time.deltaTime));
+        
+
+        if(_thrusterBoost == true && _direction.x != 0)
+        {
+            transform.Translate(_direction * (_speed * _thrusterBoostMultiplier * Time.deltaTime));
+        } 
+        else
+        {
+            transform.Translate(_direction * (_speed * Time.deltaTime));
+        } 
+        
+        
 
         // Clamp Y position
         transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, -4.7f, 0.0f), 0);
