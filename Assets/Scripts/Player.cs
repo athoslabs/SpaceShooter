@@ -45,28 +45,34 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        GameInitialization();
+    }
+
+    void GameInitialization()
+    {
         transform.position = new Vector3(0, 0, 0);
 
         _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
         _audioSource = GetComponent<AudioSource>();
-       
-        
+
+
 
         if (_spawnManager == null)
         {
             Debug.LogError("The Spawn Manager is NULL");
         }
 
-        if(_uiManager == null)
+        if (_uiManager == null)
         {
             Debug.LogError("The UI Manager is NULL");
         }
 
-        if(_audioSource == null)
+        if (_audioSource == null)
         {
             Debug.LogError("AudioSource on the Player is NULL");
-        } else
+        }
+        else
         {
             _audioSource.clip = _laserSound;
         }
@@ -153,15 +159,20 @@ public class Player : MonoBehaviour
 
         if(_lives <= 0)
         {
-            _spawnManager.OnPlayerDeath();
-            Instantiate(_explosionPrefab, transform.position, Quaternion.identity);
-            _leftEngineDamage.SetActive(false);
-            _rightEngineDamage.SetActive(false);
-            _turnOffThruster.SetActive(false);
-            Destroy(GetComponent<SpriteRenderer>());
-            Destroy(GetComponent<Collider2D>());
-            Destroy(this.gameObject, 2.8f);
+            DestroyPlayer();
         }
+    }
+
+    void DestroyPlayer()
+    {
+        _spawnManager.OnPlayerDeath();
+        Instantiate(_explosionPrefab, transform.position, Quaternion.identity);
+        _leftEngineDamage.SetActive(false);
+        _rightEngineDamage.SetActive(false);
+        _turnOffThruster.SetActive(false);
+        Destroy(GetComponent<SpriteRenderer>());
+        Destroy(GetComponent<Collider2D>());
+        Destroy(this.gameObject, 2.8f);
     }
 
     // Handle PowerUp Methods
