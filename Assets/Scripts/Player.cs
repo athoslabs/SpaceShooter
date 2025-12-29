@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
@@ -45,6 +46,9 @@ public class Player : MonoBehaviour
     private bool _thrusterBoost = false;
     [SerializeField]
     private float _thrusterBoostMultiplier = 2.5f;
+    [SerializeField]
+    private Slider _thrusterBoostSlider;
+
 
     // Start is called before the first frame update
     void Start()
@@ -101,22 +105,29 @@ public class Player : MonoBehaviour
     {
         _horizontalInput = Input.GetAxis("Horizontal");
         _verticalInput = Input.GetAxis("Vertical");
-        _thrusterBoost = Input.GetKey(KeyCode.LeftShift);
         _direction.x = _horizontalInput;
         _direction.y = _verticalInput;
 
-        
+        _thrusterBoost = Input.GetKey(KeyCode.LeftShift);
 
-        if(_thrusterBoost == true && _direction.x != 0)
+        if(_thrusterBoost == true && _uiManager._isThrusterBoostActive == true )
         {
             transform.Translate(_direction * (_speed * _thrusterBoostMultiplier * Time.deltaTime));
+            StartCoroutine(_uiManager.ThrusterBoostSliderDown());
         } 
         else
         {
             transform.Translate(_direction * (_speed * Time.deltaTime));
-        } 
-        
-        
+        }
+
+        if (_uiManager._isThrusterBoostActive == false)
+        {
+            StartCoroutine(_uiManager.ThrusterBoostSliderUp());
+        }
+
+
+
+
 
         // Clamp Y position
         transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, -4.7f, 0.0f), 0);
