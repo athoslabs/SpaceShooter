@@ -29,6 +29,12 @@ public class Player : MonoBehaviour
     private bool _isShieldActive = false;
     [SerializeField]
     private GameObject _shieldVisualizer;
+    [SerializeField]
+    private GameObject _shieldVisualizer1;
+    [SerializeField]
+    private GameObject _shieldVisualizer2;
+    [SerializeField]
+    private int _shieldHits;
 
     [SerializeField]
     private GameObject _leftEngineDamage, _rightEngineDamage, _turnOffThruster;
@@ -38,6 +44,8 @@ public class Player : MonoBehaviour
     private UIManager _uiManager;
     [SerializeField]
     private AudioClip _laserSound;
+    [SerializeField]
+    private AudioClip _explosionSound;
     private AudioSource _audioSource;
     [SerializeField]
     private GameObject _explosionPrefab;
@@ -162,24 +170,43 @@ public class Player : MonoBehaviour
 
     public void Damage()
     {
-        if(_isShieldActive == true)
+        _audioSource.clip = _explosionSound;
+        
+        if (_isShieldActive == true && _shieldHits >= 2)
         {
-            _isShieldActive = false;
             _shieldVisualizer.SetActive(false);
+            _shieldVisualizer1.SetActive(true);
+            _shieldHits -= 1;
             return;
         }
+        else if (_isShieldActive == true && _shieldHits >= 1)
+        {
+            _shieldVisualizer1.SetActive(false);
+            _shieldVisualizer2.SetActive(true);
+            _shieldHits -= 1;
+            return;
+        }
+        else if (_isShieldActive == true && _shieldHits <= 0)
+        {
+            _isShieldActive = false;
+            _shieldVisualizer2.SetActive(false);
+            return;
+        }
+
 
         _lives--;
 
         if(_lives == 2)
         {
             _leftEngineDamage.SetActive(true);
+            _audioSource.Play();
+
           
         }
         else if(_lives == 1)
         {
             _rightEngineDamage.SetActive(true);
-           
+            _audioSource.Play();
         }
 
         _uiManager.UpdateLives(_lives);
@@ -235,6 +262,7 @@ public class Player : MonoBehaviour
 
     public void ShieldActive()
     {
+        _shieldHits = 2;
         _isShieldActive = true;
         _shieldVisualizer.SetActive(true);
     }
