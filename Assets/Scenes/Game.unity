@@ -1569,6 +1569,7 @@ MonoBehaviour:
   _score: 0
   _laserSound: {fileID: 8300000, guid: 75676f361bdfeaf41a46623e95df3dbc, type: 3}
   _explosionSound: {fileID: 8300000, guid: a885c043fab7e46438bba03ba9dab6bc, type: 3}
+  _powerUpSound: {fileID: 8300000, guid: 5ee343246919d2b4bba63ae629e95494, type: 3}
   _explosionPrefab: {fileID: 4886586983659144979, guid: a56d056081e3e0f4e8887f6794f2db4f,
     type: 3}
   _thrusterBoost: 0
@@ -2049,6 +2050,7 @@ MonoBehaviour:
   - {fileID: 4970345944473497067, guid: b1f9290f1ab60b144bc8e0b9b9d7cd13, type: 3}
   - {fileID: 6130326804231868785, guid: ef3003cef4cf96e4c8da70e0fcf4231a, type: 3}
   - {fileID: 5518121656525783941, guid: 5af9ee493afdda747aa79b711ff7d11e, type: 3}
+  - {fileID: 5107186226909732954, guid: b6ef2c35f4b85394d878f0c0c62aacaa, type: 3}
 --- !u!4 &1656397289
 Transform:
   m_ObjectHideFlags: 0

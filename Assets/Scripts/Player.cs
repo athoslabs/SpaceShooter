@@ -46,6 +46,8 @@ public class Player : MonoBehaviour
     private AudioClip _laserSound;
     [SerializeField]
     private AudioClip _explosionSound;
+    [SerializeField]
+    private AudioClip _powerUpSound;
     private AudioSource _audioSource;
     [SerializeField]
     private GameObject _explosionPrefab;
@@ -152,7 +154,9 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void UpdateAmmo(int ammo)
+
+
+    public void UpdateAmmoCount(int ammo)
     {
         _uiManager.UpdatePlayerAmmo(ammo);
     }
@@ -167,13 +171,13 @@ public class Player : MonoBehaviour
         {
             Instantiate(_tripleShotPrefab, transform.position, Quaternion.identity);
             _ammoCount -= 3;
-            UpdateAmmo(_ammoCount);
+            UpdateAmmoCount(_ammoCount);
         } 
         else if(_ammoCount > 0)
         {
             Instantiate(_laserPrefab, transform.position + new Vector3(0, _laserOffset, 0), Quaternion.identity);
             _ammoCount -= 1;
-            UpdateAmmo(_ammoCount);
+            UpdateAmmoCount(_ammoCount);
         }
 
         if(_ammoCount > 0)
@@ -250,6 +254,7 @@ public class Player : MonoBehaviour
     public void TripleShotActive()
     {
         _isTripleShotActive = true;
+        _audioSource.PlayOneShot(_powerUpSound);
         StartCoroutine(TripleShotPowerDownRoutine());
     }
 
@@ -264,6 +269,7 @@ public class Player : MonoBehaviour
     public void SpeedBoostActive()
     {
         _isSpeedBoostActive = true;
+        _audioSource.PlayOneShot(_powerUpSound);
         _speed *=_speedMultiplier;
         StartCoroutine(SpeedBoostPowerDownRoutine());
     }
@@ -280,7 +286,15 @@ public class Player : MonoBehaviour
     {
         _shieldHits = 2;
         _isShieldActive = true;
+        _audioSource.PlayOneShot(_powerUpSound);
         _shieldVisualizer.SetActive(true);
+    }
+
+    public void UpdateAmmo()
+    {
+        _ammoCount = 15;
+        _audioSource.PlayOneShot(_powerUpSound);
+        UpdateAmmoCount(_ammoCount);
     }
 
     public void AddScore(int points)
