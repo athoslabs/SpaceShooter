@@ -21,11 +21,14 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private float _thrusterBoostSliderMaxValue = 100.0f;
     public bool _isThrusterBoostActive = true;
+    [SerializeField]
+    private Text _ammoLeft;
 
     // Start is called before the first frame update
     void Start()
     {
         _scoreText.text = "Score: " + 0;
+        _ammoLeft.text = "Ammo: " + 15;
         _gameOverText.gameObject.SetActive(false);
         _restartText.gameObject.SetActive(false);
         _gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
@@ -36,6 +39,16 @@ public class UIManager : MonoBehaviour
         {
             Debug.LogError("GameManager is NULL");
         }
+    }
+
+    public void UpdatePlayerAmmo(int ammo)
+    {
+        if(ammo < 0)
+        {
+            ammo = 0;
+        }
+
+        _ammoLeft.text = "Ammo: " + ammo.ToString();
     }
 
     public void UpdateScore(int playerScore)

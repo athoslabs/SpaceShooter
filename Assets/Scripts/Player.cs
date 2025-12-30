@@ -56,6 +56,8 @@ public class Player : MonoBehaviour
     private float _thrusterBoostMultiplier = 2.5f;
     [SerializeField]
     private Slider _thrusterBoostSlider;
+    [SerializeField]
+    private int _ammoCount = 15;
 
 
     // Start is called before the first frame update
@@ -150,21 +152,35 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void UpdateAmmo(int ammo)
+    {
+        _uiManager.UpdatePlayerAmmo(ammo);
+    }
+
     void FireLaser()
     {
         _audioSource.clip = _laserSound;
 
         _canFire = Time.time + _fireRate;
 
-        if(_isTripleShotActive == true)
+        if(_isTripleShotActive == true && _ammoCount > 0)
         {
             Instantiate(_tripleShotPrefab, transform.position, Quaternion.identity);
-        } else
+            _ammoCount -= 3;
+            UpdateAmmo(_ammoCount);
+        } 
+        else if(_ammoCount > 0)
         {
             Instantiate(_laserPrefab, transform.position + new Vector3(0, _laserOffset, 0), Quaternion.identity);
+            _ammoCount -= 1;
+            UpdateAmmo(_ammoCount);
         }
 
-        _audioSource.Play();
+        if(_ammoCount > 0)
+        {
+            _audioSource.PlayOneShot(_laserSound, 0.7f);
+        }
+       
         
     }
 
