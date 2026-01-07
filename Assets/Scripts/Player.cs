@@ -216,12 +216,12 @@ public class Player : MonoBehaviour
 
         _lives--;
 
+
         if(_lives == 2)
         {
             _leftEngineDamage.SetActive(true);
             _audioSource.Play();
 
-          
         }
         else if(_lives == 1)
         {
@@ -250,6 +250,31 @@ public class Player : MonoBehaviour
     }
 
     // Handle PowerUp Methods
+
+    public void AddLife()
+    {
+        if(_lives < 3)
+        {
+            _lives += 1;
+            _audioSource.PlayOneShot(_powerUpSound);
+            _uiManager.UpdateLives(_lives);
+
+            if(_lives > 2)
+            {
+                _rightEngineDamage.SetActive(false);
+                _leftEngineDamage.SetActive(false);
+            }
+            else if(_lives == 2)
+            {
+                _leftEngineDamage.SetActive(false);
+                _rightEngineDamage.SetActive(true);
+            }
+            else if(_lives == 1)
+            {
+                _leftEngineDamage.SetActive(true);
+            }
+        }
+    }
 
     public void TripleShotActive()
     {
@@ -302,5 +327,7 @@ public class Player : MonoBehaviour
         _score += points;
         _uiManager.UpdateScore(_score);
     }
+
+
 
 }
