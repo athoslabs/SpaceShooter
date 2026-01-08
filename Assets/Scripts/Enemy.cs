@@ -18,6 +18,8 @@ public class Enemy : MonoBehaviour
     private float _canFire = -1.0f;
     private GameObject _enemyLasers;
     private Laser[] _lasers;
+    [SerializeField]
+    private GameObject _explosionPrefab;
 
     // Start is called before the first frame update
     void Start()
@@ -82,6 +84,15 @@ public class Enemy : MonoBehaviour
         FireLasers();
     }
 
+    public void FireBall()
+    {
+        Instantiate(_explosionPrefab, transform.position, Quaternion.identity);
+        _speed = 0;
+        _audioSource.PlayOneShot(_explosionSound);
+        Destroy(GetComponent<Collider2D>());
+        Destroy(gameObject);
+    }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         if(other.tag == "Player")
@@ -113,4 +124,5 @@ public class Enemy : MonoBehaviour
             Destroy(this.gameObject, 2.8f);
         }
     }
+
 }

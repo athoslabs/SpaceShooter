@@ -43,9 +43,13 @@ public class SpawnManager : MonoBehaviour
 
         while(_stopSpawning == false)
         { 
-           _positionToSpawnPowerUp = new Vector3(Random.Range(-9.0f, 9.0f), 7.0f, 0.0f);
-           _randomPowerUp = Random.Range(0, 5);
-           Instantiate(_powerUps[_randomPowerUp], _positionToSpawnPowerUp, Quaternion.identity);
+            _positionToSpawnPowerUp = new Vector3(Random.Range(-9.0f, 9.0f), 7.0f, 0.0f);
+            _randomPowerUp = Random.Range(0, 6);
+            if(_randomPowerUp == 6)
+            {
+                _randomPowerUp = Random.Range(0, 6);
+            }
+            Instantiate(_powerUps[_randomPowerUp], _positionToSpawnPowerUp, Quaternion.identity);
 
             _randomPowerUpTime = Random.Range(3.0f, 8.0f);
 

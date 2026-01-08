@@ -53,6 +53,9 @@ public class PowerUp : MonoBehaviour
                     case 4:
                         _player.AddLife();
                         break;
+                    case 5:
+                        _player.FireBall();
+                        break;
                     default:
                         Debug.Log("Default Value");
                         break;

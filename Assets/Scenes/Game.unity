@@ -1576,6 +1576,8 @@ MonoBehaviour:
   _thrusterBoostMultiplier: 2.5
   _thrusterBoostSlider: {fileID: 1324774018}
   _ammoCount: 15
+  _fireBallShot: 0
+  _enemiesArray: []
 --- !u!212 &1422492679
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2052,6 +2054,7 @@ MonoBehaviour:
   - {fileID: 5518121656525783941, guid: 5af9ee493afdda747aa79b711ff7d11e, type: 3}
   - {fileID: 5107186226909732954, guid: b6ef2c35f4b85394d878f0c0c62aacaa, type: 3}
   - {fileID: 3302083383701800300, guid: d9cd6820e32dd6b4b93a432f3cc74366, type: 3}
+  - {fileID: 166914077992506861, guid: 2f0cf90079df29b41ad9edee78182b04, type: 3}
 --- !u!4 &1656397289
 Transform:
   m_ObjectHideFlags: 0

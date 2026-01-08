@@ -60,6 +60,11 @@ public class Player : MonoBehaviour
     private Slider _thrusterBoostSlider;
     [SerializeField]
     private int _ammoCount = 15;
+    [SerializeField]
+    private int _fireBallShot;
+    private bool _isFireBallActive = false;
+    [SerializeField]
+    private GameObject[] _enemiesArray;
 
 
     // Start is called before the first frame update
@@ -184,6 +189,12 @@ public class Player : MonoBehaviour
         {
             _audioSource.PlayOneShot(_laserSound, 0.7f);
         }
+
+        if(_isFireBallActive == true && _fireBallShot > 0)
+        {
+            FireBallEngage();
+            _fireBallShot--;
+        }
        
         
     }
@@ -250,6 +261,32 @@ public class Player : MonoBehaviour
     }
 
     // Handle PowerUp Methods
+
+    public void FireBall()
+    {
+        _isFireBallActive = true;
+        _fireBallShot = 1;
+        _audioSource.PlayOneShot(_powerUpSound);
+        StartCoroutine(FireBallPowerDownRoutine());
+    }
+
+    IEnumerator FireBallPowerDownRoutine()
+    {
+        yield return new WaitForSeconds(5.0f);
+        _isFireBallActive = false;
+    }
+
+    void FireBallEngage()
+    {
+        _enemiesArray = GameObject.FindGameObjectsWithTag("Enemy");
+
+        foreach(GameObject enemy in _enemiesArray)
+        {
+            enemy.GetComponent<Enemy>().FireBall();
+        }
+    }
+
+
 
     public void AddLife()
     {
