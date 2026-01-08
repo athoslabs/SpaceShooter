@@ -65,6 +65,8 @@ public class Player : MonoBehaviour
     private bool _isFireBallActive = false;
     [SerializeField]
     private GameObject[] _enemiesArray;
+    [SerializeField]
+    private CameraShake _cameraShake;
 
 
     // Start is called before the first frame update
@@ -231,12 +233,14 @@ public class Player : MonoBehaviour
         if(_lives == 2)
         {
             _leftEngineDamage.SetActive(true);
+            ShakeCamera();
             _audioSource.Play();
 
         }
         else if(_lives == 1)
         {
             _rightEngineDamage.SetActive(true);
+            ShakeCamera();
             _audioSource.Play();
         }
 
@@ -261,6 +265,11 @@ public class Player : MonoBehaviour
     }
 
     // Handle PowerUp Methods
+
+    public void ShakeCamera()
+    {
+        StartCoroutine(_cameraShake.Shaking());
+    }
 
     public void FireBall()
     {
